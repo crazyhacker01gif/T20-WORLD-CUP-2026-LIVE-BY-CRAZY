@@ -9,26 +9,26 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 
 body{
-font-family:'Segoe UI',Tahoma,sans-serif;
-background:linear-gradient(135deg,#0d0d0d,#1a1a1a);
-color:#fff;
-text-align:center;
-display:flex;
-flex-direction:column;
-align-items:center;
+  font-family:'Segoe UI',Tahoma,sans-serif;
+  background:linear-gradient(135deg,#0d0d0d,#1a1a1a);
+  color:#fff;
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
 }
 
 /* HEADER */
 .header{
-width:100%;
-padding:25px;
-font-size:28px;
-font-weight:bold;
-background:linear-gradient(-45deg,#ff0000,#ffcc00,#ff3300,#ffaa00);
-background-size:400% 400%;
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-animation:gradAnim 8s ease infinite;
+  width:100%;
+  padding:25px;
+  font-size:28px;
+  font-weight:bold;
+  background:linear-gradient(-45deg,#ff0000,#ffcc00,#ff3300,#ffaa00);
+  background-size:400% 400%;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:gradAnim 8s ease infinite;
 }
 @keyframes gradAnim{
 0%{background-position:0% 50%}
@@ -43,12 +43,6 @@ padding:6px 15px;
 border-radius:20px;
 font-size:14px;
 font-weight:bold;
-animation:blink 1s infinite;
-}
-@keyframes blink{
-0%{opacity:1}
-50%{opacity:0.4}
-100%{opacity:1}
 }
 
 /* STREAM */
@@ -174,15 +168,6 @@ border-radius:20px;
 cursor:pointer;
 }
 
-/* REACTIONS */
-#reactionContainer{
-position:fixed;
-top:20%;
-left:50%;
-transform:translateX(-50%);
-pointer-events:none;
-}
-
 /* WHATSAPP */
 .whatsapp{
 display:block;
@@ -214,10 +199,9 @@ onload="document.getElementById('loader').style.display='none'">
 
 <button class="btn" onclick="goFullScreen()">🔥 Watch Full Screen</button>
 
-<!-- SCOREBOARD (NICHE) -->
-<div class="scoreboard-container">
-<div class="scoreboard-header">📊 LIVE SCOREBOARD</div>
-<iframe src="https://www.espncricinfo.com/series/icc-men-s-t20-world-cup-2025-26-1502138/new-zealand-vs-south-africa-24th-match-group-d-1512742/live-cricket-score"></iframe>
+<!-- MATCH SCHEDULE -->
+<div class="match-info-box" style="margin:20px auto;background:#111;border-radius:15px;padding:15px;max-width:1200px;font-size:16px;box-shadow:0 8px 25px rgba(0,0,0,0.7);">
+Upcoming Match: <span id="nextMatchTeams">Loading...</span> | Starts in: <span id="countdown">Loading...</span>
 </div>
 
 <div class="viewer-box">
@@ -250,12 +234,11 @@ target="_blank">
 Join WhatsApp Channel
 </a>
 
-<div id="reactionContainer"></div>
-
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
 <script>
+// FIREBASE INIT
 const firebaseConfig={
 apiKey:"AIzaSyA8tz08_fIIVq3MRT3VVTLyD35QsfLzxE0",
 authDomain:"t20worldcuplivebycrazy.firebaseapp.com",
@@ -265,15 +248,39 @@ projectId:"t20worldcuplivebycrazy"
 firebase.initializeApp(firebaseConfig);
 const db=firebase.database();
 
+/* MATCH SCHEDULE */
+const matches = [
+  { teams: "Pakistan 🇵🇰 vs India 🇮🇳", time: "2026-02-15T14:00:00" },
+  { teams: "Australia 🇦🇺 vs England 🏴", time: "2026-02-15T18:00:00" },
+  { teams: "New Zealand 🇳🇿 vs South Africa 🇿🇦", time: "2026-02-16T12:00:00" }
+];
+
+function updateNextMatchCountdown() {
+  const now = new Date();
+  let nextMatch = matches.find(m => new Date(m.time) > now);
+  if (!nextMatch) {
+    document.getElementById("countdown").innerText = "No upcoming matches!";
+    document.getElementById("nextMatchTeams").innerText = "-";
+    return;
+  }
+  const diff = new Date(nextMatch.time) - now;
+  const h = Math.floor(diff/1000/60/60);
+  const m = Math.floor((diff/1000/60)%60);
+  const s = Math.floor((diff/1000)%60);
+  document.getElementById("countdown").innerText = `${h}h ${m}m ${s}s`;
+  document.getElementById("nextMatchTeams").innerText = nextMatch.teams;
+}
+setInterval(updateNextMatchCountdown,1000);
+updateNextMatchCountdown();
+
 /* USERNAME SAVE */
 let currentUser = localStorage.getItem("username") || "Guest";
-
 function setUsername(){
-const name=document.getElementById("usernameInput").value.trim();
-if(name==="")return;
-currentUser=name;
-localStorage.setItem("username",name);
-alert("Username Set: "+name);
+  const name=document.getElementById("usernameInput").value.trim();
+  if(name==="")return;
+  currentUser=name;
+  localStorage.setItem("username",name);
+  alert("Username Set: "+name);
 }
 
 /* VIEWERS */
@@ -300,10 +307,9 @@ timestamp:Date.now()
 });
 
 document.getElementById("chatInput").value="";
-addReaction("🔥");
 }
 
-/* RECEIVE + AUTO DELETE */
+/* RECEIVE + AUTO DELETE 5 MIN */
 db.ref("chat").on("child_added",snap=>{
 let data=snap.val(),key=snap.key;
 let now=Date.now();
@@ -318,28 +324,12 @@ div.scrollIntoView({behavior:"smooth"});
 setTimeout(()=>{db.ref("chat/"+key).remove();},300000-(now-data.timestamp));
 });
 
-/* REACTIONS */
-function addReaction(emoji){
-const container=document.getElementById("reactionContainer");
-const span=document.createElement("span");
-span.innerText=emoji;
-span.style.position="absolute";
-span.style.left=Math.random()*200-100+"px";
-span.style.fontSize="32px";
-span.style.opacity="1";
-span.style.transition="all 2s ease-out";
-container.appendChild(span);
-setTimeout(()=>{
-span.style.transform="translateY(-120px)";
-span.style.opacity="0";
-},50);
-setTimeout(()=>{container.removeChild(span);},2000);
-}
-
 /* FULLSCREEN */
 function goFullScreen(){
 let iframe=document.getElementById("liveFrame");
 if(iframe.requestFullscreen){iframe.requestFullscreen();}
+else if(iframe.webkitRequestFullscreen){iframe.webkitRequestFullscreen();}
+else if(iframe.msRequestFullscreen){iframe.msRequestFullscreen();}
 }
 </script>
 
