@@ -4,32 +4,213 @@
 <meta charset="UTF-8">
 <title>T20 WC 2026 Live | Crazy</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Segoe UI',Tahoma,sans-serif;background:linear-gradient(135deg,#000,#111,#000);color:#fff;text-align:center;display:flex;flex-direction:column;align-items:center;overflow-x:hidden;}
-.header{width:100%;padding:20px;font-size:26px;font-weight:bold;background:linear-gradient(-45deg,#ff0000,#ffcc00,#ff3300,#ffaa00);background-size:400% 400%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:gradAnim 8s ease infinite;}
-@keyframes gradAnim{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-.live-badge{margin-top:10px;background:#e10600;padding:6px 15px;border-radius:20px;font-size:14px;font-weight:bold;animation:blink 1s infinite;}
-@keyframes blink{0%{opacity:1}50%{opacity:0.4}100%{opacity:1}}
-.stream-container{position:relative;width:90%;max-width:1000px;padding-bottom:56.25%;margin:30px auto 20px auto;border-radius:20px;overflow:hidden;background:#000;box-shadow:0 15px 40px rgba(0,0,0,0.7);}
-.stream-container iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none;}
-.loader{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);border:6px solid #f3f3f3;border-top:6px solid #ffcc00;border-radius:50%;width:60px;height:60px;animation:spin 1s linear infinite;}
-@keyframes spin{0%{transform:translate(-50%,-50%) rotate(0deg);}100%{transform:translate(-50%,-50%) rotate(360deg);}}
-.btn{padding:14px 30px;background:linear-gradient(to right,#ffcc00,#ff9900);border:none;font-size:16px;font-weight:bold;border-radius:30px;cursor:pointer;margin:15px;}
-.viewer-box{background:#111;padding:12px 25px;border-radius:30px;margin:20px 0;font-size:18px;font-weight:bold;color:#00ff99;}
-.score-container{width:90%;max-width:1000px;background:#1a1a1a;border-radius:20px;padding:20px;margin-bottom:40px;}
-.score-container h2{color:#ffcc00;margin-bottom:15px;text-align:left;}
-.score-container iframe{width:100%;height:400px;border:none;border-radius:15px;}
-.chat-container{width:90%;max-width:1000px;background:#111;border-radius:20px;padding:15px;margin-bottom:40px;}
-.chat-box{height:250px;overflow-y:auto;background:#000;padding:10px;border-radius:10px;text-align:left;margin-bottom:10px;}
-.chat-input{display:flex;}
-.chat-input input{flex:1;padding:10px;border:none;border-radius:20px 0 0 20px;}
-.chat-input button{padding:10px 20px;border:none;background:#25d366;color:#fff;border-radius:0 20px 20px 0;cursor:pointer;}
-.whatsapp{position:fixed;bottom:20px;right:20px;background:#25d366;padding:12px 18px;border-radius:50px;color:#fff;font-weight:bold;text-decoration:none;}
-.username-input{margin:15px 0;}
-.username-input input{padding:10px;width:200px;border-radius:20px;border:none;}
-.username-input button{padding:10px 20px;border-radius:20px;border:none;background:#ffcc00;color:#000;cursor:pointer;}
-@media(max-width:768px){.score-container iframe{height:300px;}.header{font-size:22px;}}
+
+body{
+  font-family:'Segoe UI',Tahoma,sans-serif;
+  background:linear-gradient(135deg,#000,#111,#000);
+  color:#fff;
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+.header{
+  width:100%;
+  padding:20px;
+  font-size:26px;
+  font-weight:bold;
+  background:linear-gradient(-45deg,#ff0000,#ffcc00,#ff3300,#ffaa00);
+  background-size:400% 400%;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:gradAnim 8s ease infinite;
+}
+
+@keyframes gradAnim{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+
+.live-badge{
+  margin-top:10px;
+  background:#e10600;
+  padding:6px 15px;
+  border-radius:20px;
+  font-size:14px;
+  font-weight:bold;
+  animation:blink 1s infinite;
+}
+
+@keyframes blink{
+  0%{opacity:1}
+  50%{opacity:0.4}
+  100%{opacity:1}
+}
+
+.stream-container{
+  position:relative;
+  width:95%;
+  max-width:1400px;
+  padding-bottom:60%;
+  margin:30px auto 20px auto;
+  border-radius:20px;
+  overflow:hidden;
+  background:#000;
+  box-shadow:0 15px 40px rgba(0,0,0,0.7);
+}
+
+.stream-container iframe{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  border:none;
+}
+
+.loader{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  border:6px solid #f3f3f3;
+  border-top:6px solid #ffcc00;
+  border-radius:50%;
+  width:60px;
+  height:60px;
+  animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+  0%{transform:translate(-50%,-50%) rotate(0deg);}
+  100%{transform:translate(-50%,-50%) rotate(360deg);}
+}
+
+.btn{
+  padding:14px 30px;
+  background:linear-gradient(to right,#ffcc00,#ff9900);
+  border:none;
+  font-size:16px;
+  font-weight:bold;
+  border-radius:30px;
+  cursor:pointer;
+  margin:15px;
+}
+
+.viewer-box{
+  background:#111;
+  padding:12px 25px;
+  border-radius:30px;
+  margin:20px 0;
+  font-size:18px;
+  font-weight:bold;
+  color:#00ff99;
+}
+
+.username-input{
+  margin:15px 0;
+}
+
+.username-input input{
+  padding:10px;
+  width:200px;
+  border-radius:20px;
+  border:none;
+}
+
+.username-input button{
+  padding:10px 20px;
+  border-radius:20px;
+  border:none;
+  background:#ffcc00;
+  color:#000;
+  cursor:pointer;
+}
+
+.chat-container{
+  width:90%;
+  max-width:1000px;
+  background:#111;
+  border-radius:20px;
+  padding:15px;
+  margin-bottom:40px;
+}
+
+.chat-box{
+  height:300px;
+  overflow-y:auto;
+  background:#000;
+  padding:10px;
+  border-radius:10px;
+  text-align:left;
+  margin-bottom:10px;
+  scroll-behavior:smooth;
+}
+
+.chat-input{
+  display:flex;
+}
+
+.chat-input input{
+  flex:1;
+  padding:10px;
+  border:none;
+  border-radius:20px 0 0 20px;
+}
+
+.chat-input button{
+  padding:10px 20px;
+  border:none;
+  background:#25d366;
+  color:#fff;
+  border-radius:0 20px 20px 0;
+  cursor:pointer;
+}
+
+.msg-item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:5px;
+}
+
+.msg-text{
+  flex:1;
+  padding:4px 8px;
+  border-radius:10px;
+}
+
+.delete-btn{
+  background:red;
+  color:#fff;
+  border:none;
+  padding:2px 6px;
+  border-radius:5px;
+  cursor:pointer;
+  margin-left:10px;
+}
+
+.whatsapp{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:#25d366;
+  padding:12px 18px;
+  border-radius:50px;
+  color:#fff;
+  font-weight:bold;
+  text-decoration:none;
+}
+
+@media(max-width:768px){
+  .stream-container{padding-bottom:70%;}
+  .header{font-size:22px;}
+}
 </style>
 </head>
 <body>
@@ -39,20 +220,21 @@ body{font-family:'Segoe UI',Tahoma,sans-serif;background:linear-gradient(135deg,
 
 <div class="stream-container">
   <div class="loader" id="loader"></div>
-  <iframe id="liveFrame" src="https://tamashaweb.com/icc-mens-t20-world-cup-2026-c" allowfullscreen onload="document.getElementById('loader').style.display='none'"></iframe>
+  <iframe id="liveFrame"
+  src="https://tamashaweb.com/icc-mens-t20-world-cup-2026"
+  allowfullscreen
+  onload="document.getElementById('loader').style.display='none'">
+  </iframe>
 </div>
 
 <button class="btn" onclick="goFullScreen()">🔥 Watch Full Screen</button>
 
-<div class="viewer-box">👀 Live Viewers: <span id="viewerCount">128</span></div>
-
-<div class="score-container">
-  <h2>📊 SCORE BOARD</h2>
-  <iframe src="https://www.cricbuzz.com/live-cricket-scores"></iframe>
+<div class="viewer-box">
+  👀 Live Viewers: <span id="viewerCount">0</span>
 </div>
 
 <div class="username-input">
-  <input type="text" id="usernameInput" placeholder="Enter your name (optional)">
+  <input type="text" id="usernameInput" placeholder="Enter your name">
   <button onclick="setUsername()">Set Name</button>
 </div>
 
@@ -60,78 +242,97 @@ body{font-family:'Segoe UI',Tahoma,sans-serif;background:linear-gradient(135deg,
   <h2 style="color:#ffcc00;">💬 Live Chat</h2>
   <div class="chat-box" id="chatBox"></div>
   <div class="chat-input">
-    <input type="text" id="chatInput" placeholder="Type your message...">
+    <input type="text" id="chatInput" placeholder="Type message...">
     <button onclick="sendMessage()">Send</button>
   </div>
 </div>
 
-<a class="whatsapp" href="https://whatsapp.com/channel/0029Vb5l43dK0IBsMnYMGo2d" target="_blank">Join WhatsApp Channel</a>
+<a class="whatsapp"
+href="https://whatsapp.com/channel/0029Vb5l43dK0IBsMnYMGo2d"
+target="_blank">
+Join WhatsApp Channel
+</a>
 
-<!-- FIREBASE SDK -->
+<!-- FIREBASE -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
 <script>
-// 🔥 Firebase Config
 const firebaseConfig = {
   apiKey: "AIzaSyA8tz08_fIIVq3MRT3VVTLyD35QsfLzxE0",
   authDomain: "t20worldcuplivebycrazy.firebaseapp.com",
   databaseURL: "https://t20worldcuplivebycrazy-default-rtdb.firebaseio.com",
   projectId: "t20worldcuplivebycrazy",
-  storageBucket: "t20worldcuplivebycrazy.firebasestorage.app",
-  messagingSenderId: "455174518239",
-  appId: "1:455174518239:web:7b912ff0e2247ea696c06a",
-  measurementId: "G-CCZXFLJZKN"
 };
-
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-// FULLSCREEN
-function goFullScreen(){let iframe=document.getElementById("liveFrame");if(iframe.requestFullscreen){iframe.requestFullscreen();}}
+/* FULLSCREEN */
+function goFullScreen(){
+  let iframe=document.getElementById("liveFrame");
+  if(iframe.requestFullscreen){iframe.requestFullscreen();}
+}
 
-// VIEWER ANIMATION
-let count = 128;
-setInterval(()=>{
-  let change = Math.floor(Math.random()*8);
-  if(Math.random()>0.5){count+=change;}
-  else{count-=change;}
-  if(count<75) count=75;
-  document.getElementById("viewerCount").innerText=count;
-},2500);
+/* REAL-TIME VIEWER COUNTER */
+const viewerRef = db.ref("viewers");
+const myViewer = viewerRef.push();
+myViewer.set(true); // Add this user
+myViewer.onDisconnect().remove(); // Remove on disconnect
 
-// USERNAME
+viewerRef.on("value", snapshot=>{
+  const count = snapshot.numChildren();
+  document.getElementById("viewerCount").innerText = count;
+});
+
+/* USERNAME + ADMIN CHECK */
 let username = "Guest";
+let isAdmin=false;
 function setUsername(){
-  const input = document.getElementById("usernameInput");
-  if(input.value.trim()!==""){username=input.value.trim();}
+  const input=document.getElementById("usernameInput");
+  if(input.value.trim()!==""){
+    username=input.value.trim();
+    if(username==="admin"){ 
+      const pwd=prompt("Enter Admin Password");
+      if(pwd==="crazy123"){isAdmin=true; alert("Admin Mode ON");}
+    }
+  }
   input.value="";
   alert("Username set to: "+username);
 }
 
-// CHAT FUNCTIONALITY
-const chatBox = document.getElementById("chatBox");
-const chatInput = document.getElementById("chatInput");
-
+/* SEND MESSAGE */
 function sendMessage(){
-  const msg = chatInput.value.trim();
+  const msg=document.getElementById("chatInput").value.trim();
   if(msg!==""){
-    const color = "#"+Math.floor(Math.random()*16777215).toString(16);
-    const newMsg = db.ref("chat").push();
-    newMsg.set({text: msg, time: Date.now(), user: username, color: color});
-    chatInput.value="";
+    const color="#"+Math.floor(Math.random()*16777215).toString(16);
+    const newMsg=db.ref("chat").push();
+    newMsg.set({text:msg,user:username,color:color});
+    document.getElementById("chatInput").value="";
   }
 }
 
-// LISTEN FOR CHAT UPDATES
+/* RECEIVE MESSAGE + AUTO SCROLL */
 db.ref("chat").on("child_added", snapshot=>{
   const data = snapshot.val();
+  const key = snapshot.key;
   const div = document.createElement("div");
-  div.innerHTML = `<span style="color:${data.color};font-weight:bold;">${data.user}:</span> ${data.text}`;
-  chatBox.appendChild(div);
-  chatBox.scrollTop = chatBox.scrollHeight;
+  div.className="msg-item";
+  let delBtn = isAdmin ? `<button class="delete-btn" onclick="deleteMessage('${key}')">X</button>` : "";
+  div.innerHTML=`
+    <div class="msg-text">
+      <span style="color:${data.color};font-weight:bold;">${data.user}:</span> ${data.text}
+    </div>
+    ${delBtn}`;
+  document.getElementById("chatBox").appendChild(div);
+  div.scrollIntoView({behavior:"smooth"});
 });
-</script>
 
+/* DELETE MESSAGE */
+function deleteMessage(key){
+  if(confirm("Delete message?")){
+    db.ref("chat/"+key).remove();
+  }
+}
+</script>
 </body>
 </html>
