@@ -7,366 +7,341 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
+
 body{
-  font-family:'Segoe UI',Tahoma,sans-serif;
-  background:linear-gradient(135deg,#000,#111,#000);
-  color:#fff;
-  text-align:center;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
+font-family:'Segoe UI',Tahoma,sans-serif;
+background:linear-gradient(135deg,#0d0d0d,#1a1a1a);
+color:#fff;
+text-align:center;
+display:flex;
+flex-direction:column;
+align-items:center;
 }
 
 /* HEADER */
 .header{
-  width:100%;
-  padding:20px;
-  font-size:26px;
-  font-weight:bold;
-  background:linear-gradient(-45deg,#ff0000,#ffcc00,#ff3300,#ffaa00);
-  background-size:400% 400%;
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  animation:gradAnim 8s ease infinite;
+width:100%;
+padding:25px;
+font-size:28px;
+font-weight:bold;
+background:linear-gradient(-45deg,#ff0000,#ffcc00,#ff3300,#ffaa00);
+background-size:400% 400%;
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+animation:gradAnim 8s ease infinite;
 }
 @keyframes gradAnim{
-  0%{background-position:0% 50%}
-  50%{background-position:100% 50%}
-  100%{background-position:0% 50%}
+0%{background-position:0% 50%}
+50%{background-position:100% 50%}
+100%{background-position:0% 50%}
 }
 
 .live-badge{
-  margin-top:10px;
-  background:#e10600;
-  padding:6px 15px;
-  border-radius:20px;
-  font-size:14px;
-  font-weight:bold;
-  animation:blink 1s infinite;
+margin-top:10px;
+background:#e10600;
+padding:6px 15px;
+border-radius:20px;
+font-size:14px;
+font-weight:bold;
+animation:blink 1s infinite;
 }
 @keyframes blink{
-  0%{opacity:1}
-  50%{opacity:0.4}
-  100%{opacity:1}
+0%{opacity:1}
+50%{opacity:0.4}
+100%{opacity:1}
 }
 
 /* STREAM */
 .stream-container{
-  position:relative;
-  width:95%;
-  max-width:1400px;
-  padding-bottom:75%;
-  margin:30px auto 20px auto;
-  border-radius:20px;
-  overflow:hidden;
-  background:#000;
-  box-shadow:0 15px 40px rgba(0,0,0,0.7);
+position:relative;
+width:95%;
+max-width:1400px;
+padding-bottom:75%;
+margin:25px auto;
+border-radius:20px;
+overflow:hidden;
+background:#000;
+box-shadow:0 15px 40px rgba(0,0,0,0.7);
 }
 .stream-container iframe{
-  position:absolute;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  border:none;
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+border:none;
 }
 
 /* LOADER */
 .loader{
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  border:6px solid #f3f3f3;
-  border-top:6px solid #ffcc00;
-  border-radius:50%;
-  width:60px;
-  height:60px;
-  animation:spin 1s linear infinite;
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+border:6px solid #f3f3f3;
+border-top:6px solid #ffcc00;
+border-radius:50%;
+width:60px;
+height:60px;
+animation:spin 1s linear infinite;
+z-index:10;
 }
 @keyframes spin{
-  0%{transform:translate(-50%,-50%) rotate(0deg);}
-  100%{transform:translate(-50%,-50%) rotate(360deg);}
+0%{transform:translate(-50%,-50%) rotate(0deg);}
+100%{transform:translate(-50%,-50%) rotate(360deg);}
+}
+
+/* SCOREBOARD */
+.scoreboard-container{
+width:95%;
+max-width:1200px;
+margin:25px auto;
+border-radius:20px;
+overflow:hidden;
+background:#111;
+box-shadow:0 15px 35px rgba(0,0,0,0.7);
+}
+.scoreboard-header{
+padding:15px;
+font-weight:bold;
+font-size:18px;
+background:#ffcc00;
+color:#000;
+}
+.scoreboard-container iframe{
+width:100%;
+height:450px;
+border:none;
 }
 
 /* BUTTON */
 .btn{
-  padding:14px 30px;
-  background:linear-gradient(to right,#ffcc00,#ff9900);
-  border:none;
-  font-size:16px;
-  font-weight:bold;
-  border-radius:30px;
-  cursor:pointer;
-  margin:15px;
-  transition:0.3s;
+padding:16px 35px;
+background:linear-gradient(to right,#ffcc00,#ff9900);
+border:none;
+font-size:17px;
+font-weight:bold;
+border-radius:30px;
+cursor:pointer;
+margin:15px;
+transition:0.3s;
 }
-.btn:hover{
-  transform:scale(1.05);
-  box-shadow:0 0 20px #ffcc00;
-}
+.btn:hover{transform:scale(1.05);}
 
-/* VIEWER */
+/* VIEWERS */
 .viewer-box{
-  background:#111;
-  padding:12px 25px;
-  border-radius:30px;
-  margin:20px 0;
-  font-size:18px;
-  font-weight:bold;
-  color:#00ff99;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  gap:15px;
+background:#111;
+padding:12px 25px;
+border-radius:30px;
+margin:20px 0;
+font-size:18px;
+font-weight:bold;
+color:#00ff99;
 }
 
 /* CHAT */
 .chat-container{
-  width:90%;
-  max-width:1000px;
-  background:#111;
-  border-radius:20px;
-  padding:15px;
-  margin-bottom:20px;
+width:90%;
+max-width:1000px;
+background:#111;
+border-radius:20px;
+padding:20px;
+margin-bottom:30px;
 }
 .chat-box{
-  height:300px;
-  overflow-y:auto;
-  background:#000;
-  padding:10px;
-  border-radius:10px;
-  text-align:left;
-  margin-bottom:10px;
-  scroll-behavior:smooth;
-  font-size:14px;
+height:300px;
+overflow-y:auto;
+background:#000;
+padding:10px;
+border-radius:12px;
+text-align:left;
+margin-bottom:10px;
+font-size:14px;
 }
-.chat-input{
-  display:flex;
-  gap:5px;
-  margin-bottom:10px;
-}
+.chat-input{display:flex;gap:5px;margin-bottom:8px;}
 .chat-input input{
-  padding:10px;
-  border:none;
-  border-radius:20px;
+padding:12px;
+border:none;
+border-radius:20px;
+flex:1;
 }
 .chat-input button{
-  padding:10px 20px;
-  border:none;
-  background:#25d366;
-  color:#fff;
-  border-radius:20px;
-  cursor:pointer;
+padding:12px 20px;
+border:none;
+background:#25d366;
+color:#fff;
+border-radius:20px;
+cursor:pointer;
 }
 
-/* MSG ITEM */
-.msg-item{
-  display:flex;
-  justify-content:flex-start;
-  align-items:center;
-  margin-bottom:5px;
-  transition:all 0.3s ease;
-}
-.msg-text{
-  flex:1;
-  padding:6px 10px;
-  border-radius:12px;
-  margin-right:10px;
-  word-break:break-word;
-}
-.delete-btn{
-  background:red;
-  color:#fff;
-  border:none;
-  padding:2px 6px;
-  border-radius:5px;
-  cursor:pointer;
-  margin-left:10px;
+/* REACTIONS */
+#reactionContainer{
+position:fixed;
+top:20%;
+left:50%;
+transform:translateX(-50%);
+pointer-events:none;
 }
 
-/* LIVE REACTIONS */
-.reaction{
-  position:absolute;
-  font-size:22px;
-  animation:floatUp 2s ease forwards;
-}
-@keyframes floatUp{
-  0%{opacity:1; transform:translateY(0);}
-  100%{opacity:0; transform:translateY(-80px);}
-}
-
-/* WHATSAPP LINK */
+/* WHATSAPP */
 .whatsapp{
-  display:block;
-  background:#25d366;
-  padding:12px 18px;
-  border-radius:50px;
-  color:#fff;
-  font-weight:bold;
-  text-decoration:none;
-  margin:20px auto;
-  width:fit-content;
-  transition:0.3s;
-}
-.whatsapp:hover{
-  box-shadow:0 0 20px #25d366;
-  transform:scale(1.05);
-}
-
-@media(max-width:768px){
-  .stream-container{padding-bottom:80%;}
-  .header{font-size:22px;}
+display:block;
+background:#25d366;
+padding:14px 20px;
+border-radius:50px;
+color:#fff;
+font-weight:bold;
+text-decoration:none;
+margin:10px auto 40px auto;
 }
 </style>
 </head>
+
 <body>
 
 <div class="header">🏏 T20 WORLD CUP 2026 LIVE BY CRAZY</div>
 <div class="live-badge">🔴 LIVE NOW</div>
 
-<div class="stream-container" id="streamBox">
-  <div class="loader" id="loader"></div>
-  <iframe id="liveFrame"
-    src="https://tamashaweb.com/icc-mens-t20-world-cup-2026"
-    allowfullscreen
-    onload="document.getElementById('loader').style.display='none'">
-  </iframe>
+<!-- STREAM -->
+<div class="stream-container">
+<div class="loader" id="loader"></div>
+<iframe id="liveFrame"
+src="https://tamashaweb.com/icc-mens-t20-world-cup-2026"
+allowfullscreen
+onload="document.getElementById('loader').style.display='none'">
+</iframe>
 </div>
 
 <button class="btn" onclick="goFullScreen()">🔥 Watch Full Screen</button>
 
+<!-- SCOREBOARD (NICHE) -->
+<div class="scoreboard-container">
+<div class="scoreboard-header">📊 LIVE SCOREBOARD</div>
+<iframe src="https://www.espncricinfo.com/series/icc-men-s-t20-world-cup-2025-26-1502138/new-zealand-vs-south-africa-24th-match-group-d-1512742/live-cricket-score"></iframe>
+</div>
+
 <div class="viewer-box">
-  👀 Live Viewers: <span id="viewerCount">0</span>
+👀 Live Viewers: <span id="viewerCount">0</span>
 </div>
 
 <!-- CHAT -->
 <div class="chat-container">
-  <h2 style="color:#ffcc00;">💬 Live Chat</h2>
-  <div class="chat-input">
-    <input type="text" id="usernameInput" placeholder="Your Name">
-    <input type="text" id="chatInput" placeholder="Type message...">
-    <button onclick="sendMessage()">Send</button>
-  </div>
-  <div class="chat-box" id="chatBox"></div>
+<h2 style="color:#ffcc00;">💬 Live Chat</h2>
+
+<div class="chat-box" id="chatBox"></div>
+
+<!-- USERNAME SET -->
+<div class="chat-input">
+<input type="text" id="usernameInput" placeholder="Set Your Name">
+<button onclick="setUsername()">Set</button>
 </div>
 
-<!-- WhatsApp button -->
+<!-- MESSAGE SEND -->
+<div class="chat-input">
+<input type="text" id="chatInput" placeholder="Type message...">
+<button onclick="sendMessage()">Send</button>
+</div>
+
+</div>
+
 <a class="whatsapp"
 href="https://whatsapp.com/channel/0029Vb5l43dK0IBsMnYMGo2d"
 target="_blank">
 Join WhatsApp Channel
 </a>
 
-<!-- FIREBASE -->
+<div id="reactionContainer"></div>
+
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
 <script>
-// FIREBASE INIT
-const firebaseConfig = {
-  apiKey: "AIzaSyA8tz08_fIIVq3MRT3VVTLyD35QsfLzxE0",
-  authDomain: "t20worldcuplivebycrazy.firebaseapp.com",
-  databaseURL: "https://t20worldcuplivebycrazy-default-rtdb.firebaseio.com",
-  projectId: "t20worldcuplivebycrazy",
+const firebaseConfig={
+apiKey:"AIzaSyA8tz08_fIIVq3MRT3VVTLyD35QsfLzxE0",
+authDomain:"t20worldcuplivebycrazy.firebaseapp.com",
+databaseURL:"https://t20worldcuplivebycrazy-default-rtdb.firebaseio.com",
+projectId:"t20worldcuplivebycrazy"
 };
 firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
+const db=firebase.database();
 
-/* FULLSCREEN + LANDSCAPE */
-function goFullScreen(){
-  let iframe=document.getElementById("liveFrame");
-  if(iframe.requestFullscreen){iframe.requestFullscreen();}
-  else if(iframe.webkitRequestFullscreen){iframe.webkitRequestFullscreen();}
-  else if(iframe.msRequestFullscreen){iframe.msRequestFullscreen();}
+/* USERNAME SAVE */
+let currentUser = localStorage.getItem("username") || "Guest";
 
-  if(screen.orientation && screen.orientation.lock){
-    screen.orientation.lock("landscape").catch(()=>{});
-  }
+function setUsername(){
+const name=document.getElementById("usernameInput").value.trim();
+if(name==="")return;
+currentUser=name;
+localStorage.setItem("username",name);
+alert("Username Set: "+name);
 }
 
-/* VIEWERS + FAKE VIEWERS */
-const viewerRef = db.ref("viewers");
-const myViewer = viewerRef.push();
+/* VIEWERS */
+const viewerRef=db.ref("viewers");
+const myViewer=viewerRef.push();
 myViewer.set(true);
 myViewer.onDisconnect().remove();
-function randomFakeViewers(){
-  let count = Math.floor(Math.random()*30+50); // fake viewers
-  viewerRef.once("value", snap=>{
-    let real = snap.numChildren();
-    document.getElementById("viewerCount").innerText = real+count;
-  });
-}
-setInterval(randomFakeViewers,5000);
-randomFakeViewers();
-
-/* CHAT */
-let isAdmin = false;
-
-function sendMessage(){
-  let username = document.getElementById("usernameInput").value.trim() || "Guest";
-  if(username.toLowerCase() === "admin"){isAdmin=true;}
-  const msg=document.getElementById("chatInput").value.trim();
-  if(msg==="") return;
-
-  const color="#"+Math.floor(Math.random()*16777215).toString(16);
-  const newMsg = db.ref("chat").push();
-  newMsg.set({
-    text: msg,
-    user: username,
-    color: color,
-    type:"msg",
-    timestamp: Date.now()
-  });
-  document.getElementById("chatInput").value="";
-  createReaction();
-}
-
-// FAKE TYPING EFFECT
-function fakeTyping(){
-  const fakeNames=["Ali","Hassan","Sara","Ayesha","Bilal","Zoya"];
-  const fakeMsgs=["Wow!🔥","Who will win?","Go Pakistan!","What a shot!","Awesome match!"];
-  const username = fakeNames[Math.floor(Math.random()*fakeNames.length)];
-  const msg = fakeMsgs[Math.floor(Math.random()*fakeMsgs.length)];
-  const color="#"+Math.floor(Math.random()*16777215).toString(16);
-  const newMsg = db.ref("chat").push();
-  newMsg.set({text: msg,user: username,color: color,type:"msg",timestamp: Date.now()});
-}
-setInterval(fakeTyping,12000);
-
-/* LIVE REACTIONS */
-function createReaction(){
-  const emoji = ['👍','🔥','❤️','👏','😎'];
-  const el = document.createElement('div');
-  el.className = 'reaction';
-  el.innerText = emoji[Math.floor(Math.random()*emoji.length)];
-  el.style.left = (Math.random()*80+10)+'%';
-  document.body.appendChild(el);
-  setTimeout(()=>{document.body.removeChild(el)},2000);
-}
-
-// RECEIVE + AUTO DELETE GUEST MESSAGES
-db.ref("chat").on("child_added", snapshot=>{
-  const data = snapshot.val();
-  const key = snapshot.key;
-
-  if(data.type==="msg"){
-    const div = document.createElement("div");
-    div.className="msg-item";
-    let delBtn = (data.user.toLowerCase()==="admin") ? `<button class="delete-btn" onclick="db.ref('chat/${key}').remove()">X</button>` : "";
-    div.innerHTML=`<div class="msg-text" style="background:#222;color:${data.color};">
-                     <span style="font-weight:bold;">${data.user}:</span> ${data.text}
-                   </div>${delBtn}`;
-    document.getElementById("chatBox").appendChild(div);
-    div.scrollIntoView({behavior:"smooth"});
-
-    if(data.user.toLowerCase()!=="admin"){
-      setTimeout(()=>{
-        db.ref("chat/"+key).remove();
-      },300000);
-    }
-  }
+setInterval(()=>{
+viewerRef.once("value",snap=>{
+document.getElementById("viewerCount").innerText=snap.numChildren();
 });
+},5000);
+
+/* SEND MESSAGE */
+function sendMessage(){
+let msg=document.getElementById("chatInput").value.trim();
+if(msg==="")return;
+
+let newMsg=db.ref("chat").push();
+newMsg.set({
+user:currentUser,
+text:msg,
+timestamp:Date.now()
+});
+
+document.getElementById("chatInput").value="";
+addReaction("🔥");
+}
+
+/* RECEIVE + AUTO DELETE */
+db.ref("chat").on("child_added",snap=>{
+let data=snap.val(),key=snap.key;
+let now=Date.now();
+if(now-data.timestamp>300000){
+db.ref("chat/"+key).remove();
+return;
+}
+let div=document.createElement("div");
+div.innerHTML="<b>"+data.user+":</b> "+data.text;
+document.getElementById("chatBox").appendChild(div);
+div.scrollIntoView({behavior:"smooth"});
+setTimeout(()=>{db.ref("chat/"+key).remove();},300000-(now-data.timestamp));
+});
+
+/* REACTIONS */
+function addReaction(emoji){
+const container=document.getElementById("reactionContainer");
+const span=document.createElement("span");
+span.innerText=emoji;
+span.style.position="absolute";
+span.style.left=Math.random()*200-100+"px";
+span.style.fontSize="32px";
+span.style.opacity="1";
+span.style.transition="all 2s ease-out";
+container.appendChild(span);
+setTimeout(()=>{
+span.style.transform="translateY(-120px)";
+span.style.opacity="0";
+},50);
+setTimeout(()=>{container.removeChild(span);},2000);
+}
+
+/* FULLSCREEN */
+function goFullScreen(){
+let iframe=document.getElementById("liveFrame");
+if(iframe.requestFullscreen){iframe.requestFullscreen();}
+}
 </script>
+
 </body>
 </html>
