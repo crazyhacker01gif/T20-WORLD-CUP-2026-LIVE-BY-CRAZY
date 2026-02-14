@@ -7,7 +7,6 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
-
 body{
   font-family:'Segoe UI',Tahoma,sans-serif;
   background:linear-gradient(135deg,#000,#111,#000);
@@ -100,6 +99,11 @@ body{
   border-radius:30px;
   cursor:pointer;
   margin:15px;
+  transition:0.3s;
+}
+.btn:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 20px #ffcc00;
 }
 
 /* VIEWER */
@@ -124,7 +128,7 @@ body{
   background:#111;
   border-radius:20px;
   padding:15px;
-  margin-bottom:40px;
+  margin-bottom:20px;
 }
 .chat-box{
   height:300px;
@@ -135,25 +139,28 @@ body{
   text-align:left;
   margin-bottom:10px;
   scroll-behavior:smooth;
+  font-size:14px;
 }
 .chat-input{
   display:flex;
+  gap:5px;
+  margin-bottom:10px;
 }
 .chat-input input{
-  flex:1;
   padding:10px;
   border:none;
-  border-radius:20px 0 0 20px;
+  border-radius:20px;
 }
 .chat-input button{
   padding:10px 20px;
   border:none;
   background:#25d366;
   color:#fff;
-  border-radius:0 20px 20px 0;
+  border-radius:20px;
   cursor:pointer;
 }
 
+/* MSG ITEM */
 .msg-item{
   display:flex;
   justify-content:flex-start;
@@ -178,17 +185,33 @@ body{
   margin-left:10px;
 }
 
+/* LIVE REACTIONS */
+.reaction{
+  position:absolute;
+  font-size:22px;
+  animation:floatUp 2s ease forwards;
+}
+@keyframes floatUp{
+  0%{opacity:1; transform:translateY(0);}
+  100%{opacity:0; transform:translateY(-80px);}
+}
+
 /* WHATSAPP LINK */
 .whatsapp{
-  position:fixed;
-  bottom:20px;
-  right:20px;
+  display:block;
   background:#25d366;
   padding:12px 18px;
   border-radius:50px;
   color:#fff;
   font-weight:bold;
   text-decoration:none;
+  margin:20px auto;
+  width:fit-content;
+  transition:0.3s;
+}
+.whatsapp:hover{
+  box-shadow:0 0 20px #25d366;
+  transform:scale(1.05);
 }
 
 @media(max-width:768px){
@@ -220,13 +243,15 @@ body{
 <!-- CHAT -->
 <div class="chat-container">
   <h2 style="color:#ffcc00;">💬 Live Chat</h2>
-  <div class="chat-box" id="chatBox"></div>
   <div class="chat-input">
+    <input type="text" id="usernameInput" placeholder="Your Name">
     <input type="text" id="chatInput" placeholder="Type message...">
     <button onclick="sendMessage()">Send</button>
   </div>
+  <div class="chat-box" id="chatBox"></div>
 </div>
 
+<!-- WhatsApp button -->
 <a class="whatsapp"
 href="https://whatsapp.com/channel/0029Vb5l43dK0IBsMnYMGo2d"
 target="_blank">
@@ -248,31 +273,39 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-/* FULLSCREEN */
+/* FULLSCREEN + LANDSCAPE */
 function goFullScreen(){
   let iframe=document.getElementById("liveFrame");
   if(iframe.requestFullscreen){iframe.requestFullscreen();}
+  else if(iframe.webkitRequestFullscreen){iframe.webkitRequestFullscreen();}
+  else if(iframe.msRequestFullscreen){iframe.msRequestFullscreen();}
+
+  if(screen.orientation && screen.orientation.lock){
+    screen.orientation.lock("landscape").catch(()=>{});
+  }
 }
 
-/* VIEWERS */
+/* VIEWERS + FAKE VIEWERS */
 const viewerRef = db.ref("viewers");
 const myViewer = viewerRef.push();
 myViewer.set(true);
 myViewer.onDisconnect().remove();
-viewerRef.on("value", snapshot=>{
-  document.getElementById("viewerCount").innerText = snapshot.numChildren();
-});
+function randomFakeViewers(){
+  let count = Math.floor(Math.random()*30+50); // fake viewers
+  viewerRef.once("value", snap=>{
+    let real = snap.numChildren();
+    document.getElementById("viewerCount").innerText = real+count;
+  });
+}
+setInterval(randomFakeViewers,5000);
+randomFakeViewers();
 
 /* CHAT */
-let username = "Guest";
 let isAdmin = false;
 
-function setUsername(name,pwd){
-  username = name||"Guest";
-  if(name==="admin" && pwd==="crazy123"){isAdmin=true; alert("Admin Mode ON");}
-}
-
 function sendMessage(){
+  let username = document.getElementById("usernameInput").value.trim() || "Guest";
+  if(username.toLowerCase() === "admin"){isAdmin=true;}
   const msg=document.getElementById("chatInput").value.trim();
   if(msg==="") return;
 
@@ -286,6 +319,30 @@ function sendMessage(){
     timestamp: Date.now()
   });
   document.getElementById("chatInput").value="";
+  createReaction();
+}
+
+// FAKE TYPING EFFECT
+function fakeTyping(){
+  const fakeNames=["Ali","Hassan","Sara","Ayesha","Bilal","Zoya"];
+  const fakeMsgs=["Wow!🔥","Who will win?","Go Pakistan!","What a shot!","Awesome match!"];
+  const username = fakeNames[Math.floor(Math.random()*fakeNames.length)];
+  const msg = fakeMsgs[Math.floor(Math.random()*fakeMsgs.length)];
+  const color="#"+Math.floor(Math.random()*16777215).toString(16);
+  const newMsg = db.ref("chat").push();
+  newMsg.set({text: msg,user: username,color: color,type:"msg",timestamp: Date.now()});
+}
+setInterval(fakeTyping,12000);
+
+/* LIVE REACTIONS */
+function createReaction(){
+  const emoji = ['👍','🔥','❤️','👏','😎'];
+  const el = document.createElement('div');
+  el.className = 'reaction';
+  el.innerText = emoji[Math.floor(Math.random()*emoji.length)];
+  el.style.left = (Math.random()*80+10)+'%';
+  document.body.appendChild(el);
+  setTimeout(()=>{document.body.removeChild(el)},2000);
 }
 
 // RECEIVE + AUTO DELETE GUEST MESSAGES
@@ -296,15 +353,14 @@ db.ref("chat").on("child_added", snapshot=>{
   if(data.type==="msg"){
     const div = document.createElement("div");
     div.className="msg-item";
-    let delBtn = (isAdmin || data.user==="admin") ? `<button class="delete-btn" onclick="db.ref('chat/${key}').remove()">X</button>` : "";
+    let delBtn = (data.user.toLowerCase()==="admin") ? `<button class="delete-btn" onclick="db.ref('chat/${key}').remove()">X</button>` : "";
     div.innerHTML=`<div class="msg-text" style="background:#222;color:${data.color};">
                      <span style="font-weight:bold;">${data.user}:</span> ${data.text}
                    </div>${delBtn}`;
     document.getElementById("chatBox").appendChild(div);
     div.scrollIntoView({behavior:"smooth"});
 
-    // AUTO DELETE guest messages after 5 min
-    if(data.user!=="admin"){
+    if(data.user.toLowerCase()!=="admin"){
       setTimeout(()=>{
         db.ref("chat/"+key).remove();
       },300000);
