@@ -6,11 +6,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
+html, body {height:100%; overflow:hidden;}
 body{
   font-family:'Segoe UI',Tahoma,sans-serif;
-  background:linear-gradient(135deg,#0d0d0d,#1a1a1a);
+  background:#000;
   color:#fff;
-  text-align:center;
   display:flex;
   flex-direction:column;
   align-items:center;
@@ -19,8 +19,8 @@ body{
 /* HEADER */
 .header{
 width:100%;
-padding:25px;
-font-size:28px;
+padding:15px;
+font-size:24px;
 font-weight:bold;
 background:linear-gradient(-45deg,#ff0000,#ffcc00,#ff3300,#ffaa00);
 background-size:400% 400%;
@@ -35,27 +35,23 @@ text-shadow:0 2px 8px rgba(0,0,0,0.7);
 100%{background-position:0% 50%}
 }
 .live-badge{
-margin-top:10px;
+margin-top:5px;
 background:#e10600;
-padding:8px 20px;
-border-radius:25px;
-font-size:16px;
+padding:5px 15px;
+border-radius:20px;
+font-size:14px;
 font-weight:bold;
 color:#fff;
-box-shadow:0 0 15px #ff0000;
+box-shadow:0 0 10px #ff0000;
 }
 
-/* MATCH TICKER */
+/* TICKER */
 .ticker-container{
-width:95%;
-max-width:1200px;
+width:100%;
 overflow:hidden;
-margin:15px auto;
 background:#111;
-border-radius:20px;
-box-shadow:0 8px 25px rgba(0,255,204,0.3);
-padding:12px 0;
-border:2px solid #ffcc00;
+padding:8px 0;
+border-bottom:2px solid #ffcc00;
 }
 .ticker{
 display:flex;
@@ -70,132 +66,50 @@ animation:scrollTicker 25s linear infinite;
 .ticker span{
 font-weight:bold;
 color:#ffcc00;
-font-size:16px;
+font-size:14px;
 }
 
 /* STREAM */
 .stream-container{
 position:relative;
-width:95%;
-max-width:1400px;
-height:500px;
-margin:20px auto;
-border-radius:25px;
-overflow:hidden;
+width:100%;
+flex:1; /* take full available height */
 background:#000;
-box-shadow:0 15px 45px rgba(0,0,0,0.8);
-border:2px solid #ffcc00;
 }
 .stream-container iframe{
-position:absolute;
-top:-60px; /* header hide trick */
-left:0;
 width:100%;
-height:560px; /* extra height for hidden header */
+height:100%;
 border:none;
-border-radius:25px;
 }
 
-/* LOADER */
-.loader{
-position:absolute;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-border:6px solid #f3f3f3;
-border-top:6px solid #ffcc00;
-border-radius:50%;
-width:60px;
-height:60px;
-animation:spin 1s linear infinite;
-z-index:10;
-}
-@keyframes spin{
-0%{transform:translate(-50%,-50%) rotate(0deg);}
-100%{transform:translate(-50%,-50%) rotate(360deg);}
+/* MATCH INFO */
+.match-info-box{
+width:100%;
+background:#111;
+color:#ffcc00;
+font-weight:bold;
+padding:8px 0;
+text-align:center;
+border-top:2px solid #ffcc00;
+font-size:14px;
 }
 
 /* VIEWERS */
 .viewer-box{
 background:#111;
-padding:15px 25px;
-border-radius:30px;
-margin:20px 0;
-font-size:18px;
+padding:8px 15px;
+border-radius:20px;
+margin:5px 0;
+font-size:14px;
 font-weight:bold;
 color:#00ff99;
-box-shadow:0 0 20px rgba(0,255,153,0.3);
-}
-
-/* MATCH INFO */
-.match-info-box{
-margin:20px auto;
-background:#111;
-border-radius:20px;
-padding:15px 25px;
-max-width:1200px;
-font-size:16px;
-box-shadow:0 8px 25px rgba(0,255,204,0.4);
-color:#ffcc00;
-font-weight:bold;
+box-shadow:0 0 10px rgba(0,255,153,0.3);
 }
 
 /* CHAT */
 .chat-container{
-width:90%;
-max-width:1000px;
-background:#111;
-border-radius:25px;
-padding:20px;
-margin-bottom:30px;
-box-shadow:0 8px 30px rgba(255,204,0,0.3);
+display:none; /* hide chat for fullscreen focus */
 }
-.chat-box{
-height:300px;
-overflow-y:auto;
-background:#000;
-padding:12px;
-border-radius:15px;
-text-align:left;
-margin-bottom:12px;
-font-size:14px;
-border:1px solid #ffcc00;
-}
-.chat-input{display:flex;gap:8px;margin-bottom:8px;}
-.chat-input input{
-padding:12px;
-border:none;
-border-radius:25px;
-flex:1;
-background:#222;
-color:#fff;
-}
-.chat-input button{
-padding:12px 20px;
-border:none;
-background:#25d366;
-color:#fff;
-border-radius:25px;
-cursor:pointer;
-font-weight:bold;
-transition:0.3s;
-}
-.chat-input button:hover{transform:scale(1.05);}
-
-/* WHATSAPP */
-.whatsapp{
-display:block;
-background:#25d366;
-padding:14px 20px;
-border-radius:50px;
-color:#fff;
-font-weight:bold;
-text-decoration:none;
-margin:10px auto 40px auto;
-box-shadow:0 0 20px rgba(37,211,102,0.3);
-transition:0.3s;
-}
-.whatsapp:hover{transform:scale(1.05);}
 </style>
 </head>
 
@@ -204,26 +118,16 @@ transition:0.3s;
 <div class="header">🏏 T20 WORLD CUP 2026 LIVE BY CRAZY</div>
 <div class="live-badge">🔴 LIVE NOW</div>
 
-<!-- MATCH TICKER -->
 <div class="ticker-container">
 <div class="ticker" id="matchTicker">
 <span>Loading Matches...</span>
 </div>
 </div>
 
-<!-- STREAM -->
 <div class="stream-container">
-<div class="loader" id="loader"></div>
-<iframe id="liveFrame"
-src="https://tamashaweb.com/icc-mens-t20-world-cup-2026"
-allowfullscreen
-onload="document.getElementById('loader').style.display='none'">
-</iframe>
+<iframe id="liveFrame" src="https://tamashaweb.com/icc-mens-t20-world-cup-2026" allowfullscreen></iframe>
 </div>
 
-<button class="btn" onclick="goFullScreen()">🔥 Watch Full Screen</button>
-
-<!-- MATCH INFO -->
 <div class="match-info-box">
 Next Match: <span id="nextMatchTeams">Loading...</span> | Starts in: <span id="countdown">Loading...</span>
 </div>
@@ -231,31 +135,6 @@ Next Match: <span id="nextMatchTeams">Loading...</span> | Starts in: <span id="c
 <div class="viewer-box">
 👀 Live Viewers: <span id="viewerCount">0</span>
 </div>
-
-<!-- CHAT -->
-<div class="chat-container">
-<h2 style="color:#ffcc00;">💬 Live Chat</h2>
-
-<div class="chat-box" id="chatBox"></div>
-
-<!-- USERNAME SET -->
-<div class="chat-input">
-<input type="text" id="usernameInput" placeholder="Set Your Name">
-<button onclick="setUsername()">Set</button>
-</div>
-
-<!-- MESSAGE SEND -->
-<div class="chat-input">
-<input type="text" id="chatInput" placeholder="Type message...">
-<button onclick="sendMessage()">Send</button>
-</div>
-</div>
-
-<a class="whatsapp"
-href="https://whatsapp.com/channel/0029Vb5l43dK0IBsMnYMGo2d"
-target="_blank">
-Join WhatsApp Channel
-</a>
 
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
@@ -271,14 +150,14 @@ projectId:"t20worldcuplivebycrazy"
 firebase.initializeApp(firebaseConfig);
 const db=firebase.database();
 
-/* MATCH SCHEDULE */
+/* MATCHES WITH FLAGS */
 const matches = [
   { teams: "Pakistan 🇵🇰 vs India 🇮🇳", time: "2026-02-15T14:00:00" },
   { teams: "Australia 🇦🇺 vs England 🏴", time: "2026-02-15T18:00:00" },
   { teams: "New Zealand 🇳🇿 vs South Africa 🇿🇦", time: "2026-02-16T12:00:00" }
 ];
 
-/* UPDATE NEXT MATCH */
+/* NEXT MATCH */
 function updateNextMatchCountdown() {
   const now = new Date();
   let nextMatch = matches.find(m => new Date(m.time) > now);
@@ -302,28 +181,18 @@ function updateTicker(){
   const ticker=document.getElementById("matchTicker");
   ticker.innerHTML="";
   matches.forEach(m=>{
-    const span=document.createElement("span");
     const now=new Date();
     const diff=new Date(m.time)-now;
     const h=Math.floor(diff/1000/60/60);
     const mnt=Math.floor((diff/1000/60)%60);
     const s=Math.floor((diff/1000)%60);
+    const span=document.createElement("span");
     span.innerText=`${m.teams} | Starts in: ${h}h ${mnt}m ${s}s`;
     ticker.appendChild(span);
   });
 }
 setInterval(updateTicker,1000);
 updateTicker();
-
-/* USERNAME SAVE */
-let currentUser = localStorage.getItem("username") || "Guest";
-function setUsername(){
-  const name=document.getElementById("usernameInput").value.trim();
-  if(name==="")return;
-  currentUser=name;
-  localStorage.setItem("username",name);
-  alert("Username Set: "+name);
-}
 
 /* VIEWERS */
 const viewerRef=db.ref("viewers");
@@ -336,34 +205,6 @@ document.getElementById("viewerCount").innerText=snap.numChildren();
 });
 },5000);
 
-/* SEND MESSAGE */
-function sendMessage(){
-let msg=document.getElementById("chatInput").value.trim();
-if(msg==="")return;
-let newMsg=db.ref("chat").push();
-newMsg.set({
-user:currentUser,
-text:msg,
-timestamp:Date.now()
-});
-document.getElementById("chatInput").value="";
-}
-
-/* RECEIVE + AUTO DELETE 5 MIN */
-db.ref("chat").on("child_added",snap=>{
-let data=snap.val(),key=snap.key;
-let now=Date.now();
-if(now-data.timestamp>300000){
-db.ref("chat/"+key).remove();
-return;
-}
-let div=document.createElement("div");
-div.innerHTML="<b>"+data.user+":</b> "+data.text;
-document.getElementById("chatBox").appendChild(div);
-div.scrollIntoView({behavior:"smooth"});
-setTimeout(()=>{db.ref("chat/"+key).remove();},300000-(now-data.timestamp));
-});
-
 /* FULLSCREEN */
 function goFullScreen(){
 let iframe=document.getElementById("liveFrame");
@@ -371,11 +212,7 @@ if(iframe.requestFullscreen){iframe.requestFullscreen();}
 else if(iframe.webkitRequestFullscreen){iframe.webkitRequestFullscreen();}
 else if(iframe.msRequestFullscreen){iframe.msRequestFullscreen();}
 }
-
-// AUTO FULLSCREEN ON LOAD
-document.addEventListener('DOMContentLoaded', ()=>{
-goFullScreen();
-});
+document.addEventListener('DOMContentLoaded', ()=>{goFullScreen();});
 </script>
 
 </body>
