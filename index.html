@@ -7,71 +7,127 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Segoe UI',Tahoma,sans-serif;background:#000;color:#fff;text-align:center;overflow-x:hidden;}
-/* HEADER */
-.header{position:fixed;top:0;width:100%;padding:20px;font-size:24px;font-weight:bold;z-index:1000;background:linear-gradient(-45deg,#e10600,#ffcc00,#b30500,#ff9900);background-size:400% 400%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:gradAnim 8s ease infinite;text-shadow:0 2px 5px rgba(0,0,0,0.6);}
-@keyframes gradAnim{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-
-/* CONTAINER */
-.container{margin-top:100px;padding:20px;max-width:1600px;margin:auto;}
+body{font-family:'Segoe UI',Tahoma,sans-serif;background:#000;color:#fff;text-align:center;overflow-x:hidden;display:flex;flex-direction:column;align-items:center;}
+.header{
+  width:100%;
+  padding:20px;
+  font-size:24px;
+  font-weight:bold;
+  background:linear-gradient(-45deg,#e10600,#ffcc00,#b30500,#ff9900);
+  background-size:400% 400%;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:gradAnim 8s ease infinite;
+  text-shadow:0 2px 5px rgba(0,0,0,0.6);
+  text-align:center;
+}
+@keyframes gradAnim{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%;}}
 
 /* STREAM */
-.stream-container{position:relative;width:100%;padding-bottom:70%;border-radius:15px;margin-bottom:20px;background:#000;overflow:hidden;}
-.stream-container iframe{position:absolute;width:100%;height:100%;border:none;border-radius:15px;}
+.stream-container{
+  position:relative;
+  width:90%;
+  max-width:1000px;
+  padding-bottom:56.25%; /* 16:9 ratio */
+  margin:40px auto 20px auto; /* center horizontally */
+  background:#000;
+  border-radius:15px;
+  overflow:hidden;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+.stream-container iframe{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  border:none;
+  border-radius:15px;
+}
 
 /* LOADER */
-.loader{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);border:6px solid #f3f3f3;border-top:6px solid #ffcc00;border-radius:50%;width:60px;height:60px;animation:spin 1s linear infinite;z-index:10;}
+.loader{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  border:6px solid #f3f3f3;
+  border-top:6px solid #ffcc00;
+  border-radius:50%;
+  width:60px;
+  height:60px;
+  animation:spin 1s linear infinite;
+  z-index:10;
+}
 @keyframes spin{0%{transform:translate(-50%,-50%) rotate(0deg);}100%{transform:translate(-50%,-50%) rotate(360deg);}}
 
 /* FULLSCREEN BUTTON */
-.full-btn{margin-top:15px;padding:14px 30px;background:linear-gradient(to right,#ffcc00,#ff9900);border:none;font-size:16px;font-weight:bold;border-radius:30px;cursor:pointer;transition:0.3s;}
+.full-btn{
+  padding:14px 30px;
+  background:linear-gradient(to right,#ffcc00,#ff9900);
+  border:none;
+  font-size:16px;
+  font-weight:bold;
+  border-radius:30px;
+  cursor:pointer;
+  margin-bottom:20px;
+  transition:0.3s;
+}
 .full-btn:hover{transform:scale(1.05);}
 
 /* LIVE SCORE */
-.score-container{background:rgba(30,30,30,0.95);border-radius:15px;padding:20px;margin:25px 0;border-left:5px solid #25d366;animation:fadeIn 1.5s ease;}
+.score-container{
+  width:90%;
+  max-width:1000px;
+  background:rgba(30,30,30,0.95);
+  border-radius:15px;
+  padding:20px;
+  margin-bottom:40px;
+  border-left:5px solid #25d366;
+  animation:fadeIn 1.5s ease;
+}
 @keyframes fadeIn{0%{opacity:0;}100%{opacity:1;}}
 .score-container h2{color:#ffcc00;margin-bottom:15px;text-align:left;padding-left:10px;}
 .score-placeholder{background:#111;border-radius:10px;padding:15px;margin-top:10px;color:#ccc;font-size:16px;text-align:left;}
 
 /* RESPONSIVE */
-@media(max-width:768px){.stream-container{padding-bottom:85%;}.header{font-size:18px;}}
+@media(max-width:768px){
+  .stream-container{padding-bottom:70%;}
+  .score-container{padding:15px;}
+  .header{font-size:20px;}
+}
 </style>
 </head>
 <body>
 
 <div class="header">🏏 T20 WORLD CUP 2026 LIVE BY CRAZY</div>
-<div class="container">
 
-  <!-- STREAM -->
+<!-- STREAM -->
 <div class="stream-container">
   <div class="loader" id="loader"></div>
-  <iframe 
-      id="liveFrame" 
-      src="https://tamashaweb.com/icc-mens-t20-world-cup-2026-c" 
-      allowfullscreen 
-      onload="document.getElementById('loader').style.display='none'">
-  </iframe>
+  <iframe id="liveFrame" src="https://tamashaweb.com/icc-mens-t20-world-cup-2026-c" allowfullscreen onload="document.getElementById('loader').style.display='none'"></iframe>
 </div>
-  <button class="full-btn" onclick="goFullScreen()">🔥 Watch Full Screen</button>
 
-  <!-- LIVE SCORE -->
-  <div class="score-container">
-    <h2>📊 Live Scores</h2>
-    <div class="score-placeholder" id="scoreBox">Loading match info...</div>
-  </div>
+<button class="full-btn" onclick="goFullScreen()">🔥 Watch Full Screen</button>
 
+<!-- LIVE SCORE -->
+<div class="score-container">
+  <h2>📊 Live Scores</h2>
+  <div class="score-placeholder" id="scoreBox">Loading match info...</div>
 </div>
 
 <script>
 // FULLSCREEN
 function goFullScreen(){
-  let iframe = document.getElementById("liveFrame");
+  let iframe=document.getElementById("liveFrame");
   if(iframe.requestFullscreen){iframe.requestFullscreen();}
   else if(iframe.webkitRequestFullscreen){iframe.webkitRequestFullscreen();}
 }
 
-// ⚡ REAL LIVE SCORE WITH API
-const API_KEY="YOUR_API_KEY_HERE"; // replace with your key
+// REAL LIVE SCORE
+const API_KEY="YOUR_API_KEY_HERE"; // Replace with your key
 const API_URL=`https://cricket.sportmonks.com/api/v2.0/livescores?api_token=${API_KEY}`;
 
 async function fetchLiveScores(){
@@ -82,23 +138,28 @@ async function fetchLiveScores(){
     let html="";
     if(data.data && data.data.length>0){
       data.data.forEach(match=>{
-        html+=`<div class="score-placeholder">
-                 <strong>Match:</strong> ${match.localteam.name} vs ${match.visitorteam.name}<br>
-                 <strong>Status:</strong> ${match.status}<br>
-                 <strong>Score:</strong> ${match.scores || "Not available yet"}
-               </div>`;
+        // Only Pakistan vs India
+        let team1=match.localteam.name;
+        let team2=match.visitorteam.name;
+        if((team1==="Pakistan" && team2==="India")||(team1==="India" && team2==="Pakistan")){
+          html+=`<div class="score-placeholder">
+                   <strong>Match:</strong> ${team1} vs ${team2}<br>
+                   <strong>Status:</strong> ${match.status}<br>
+                   <strong>Score:</strong> ${match.scores || "Updating..."}
+                 </div>`;
+        }
       });
     } else{
       html=`<p style="color:#ccc;">No live matches at the moment.</p>`;
     }
-    document.getElementById("scoreBox").innerHTML=html;
+    document.getElementById("scoreBox").innerHTML=html||"<p>No Pakistan vs India match live right now.</p>";
   }catch(e){
-    document.getElementById("scoreBox").innerHTML=`<p style="color:#f55;">Error fetching live scores</p>`;
+    document.getElementById("scoreBox").innerHTML="<p style='color:red;'>Error fetching data</p>";
     console.error(e);
   }
 }
 
-// FETCH EVERY 30 SEC
+// INITIAL FETCH + AUTO REFRESH
 fetchLiveScores();
 setInterval(fetchLiveScores,30000);
 </script>
