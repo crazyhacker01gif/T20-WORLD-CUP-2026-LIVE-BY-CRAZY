@@ -7,36 +7,34 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
-
 body{
-font-family:'Segoe UI',Tahoma,sans-serif;
-background:linear-gradient(135deg,#0d0d0d,#1a1a1a);
-color:#fff;
-text-align:center;
-display:flex;
-flex-direction:column;
-align-items:center;
+  font-family:'Segoe UI',Tahoma,sans-serif;
+  background:linear-gradient(135deg,#0d0d0d,#1a1a1a);
+  color:#fff;
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
 }
 
 /* HEADER */
 .header{
-width:100%;
-padding:25px;
-font-size:28px;
-font-weight:bold;
-background:linear-gradient(-45deg,#ff0000,#ffcc00,#ff3300,#ffaa00);
-background-size:400% 400%;
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-animation:gradAnim 8s ease infinite;
-text-shadow:0 2px 8px rgba(0,0,0,0.7);
+  width:100%;
+  padding:25px;
+  font-size:28px;
+  font-weight:bold;
+  background:linear-gradient(-45deg,#ff0000,#ffcc00,#ff3300,#ffaa00);
+  background-size:400% 400%;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:gradAnim 8s ease infinite;
+  text-shadow:0 2px 8px rgba(0,0,0,0.7);
 }
 @keyframes gradAnim{
 0%{background-position:0% 50%}
 50%{background-position:100% 50%}
 100%{background-position:0% 50%}
 }
-
 .live-badge{
 margin-top:10px;
 background:#e10600;
@@ -81,7 +79,7 @@ font-size:16px;
 position:relative;
 width:95%;
 max-width:1400px;
-padding-bottom:75%;
+height:500px;
 margin:20px auto;
 border-radius:25px;
 overflow:hidden;
@@ -91,10 +89,10 @@ border:2px solid #ffcc00;
 }
 .stream-container iframe{
 position:absolute;
-top:0;
+top:-60px; /* header hide trick */
 left:0;
 width:100%;
-height:100%;
+height:560px; /* extra height for hidden header */
 border:none;
 border-radius:25px;
 }
@@ -343,14 +341,12 @@ document.getElementById("viewerCount").innerText=snap.numChildren();
 function sendMessage(){
 let msg=document.getElementById("chatInput").value.trim();
 if(msg==="")return;
-
 let newMsg=db.ref("chat").push();
 newMsg.set({
 user:currentUser,
 text:msg,
 timestamp:Date.now()
 });
-
 document.getElementById("chatInput").value="";
 }
 
