@@ -18,6 +18,7 @@ body{
   align-items:center;
 }
 
+/* HEADER */
 .header{
   width:100%;
   padding:20px;
@@ -29,7 +30,6 @@ body{
   -webkit-text-fill-color:transparent;
   animation:gradAnim 8s ease infinite;
 }
-
 @keyframes gradAnim{
   0%{background-position:0% 50%}
   50%{background-position:100% 50%}
@@ -45,25 +45,24 @@ body{
   font-weight:bold;
   animation:blink 1s infinite;
 }
-
 @keyframes blink{
   0%{opacity:1}
   50%{opacity:0.4}
   100%{opacity:1}
 }
 
+/* STREAM */
 .stream-container{
   position:relative;
   width:95%;
   max-width:1400px;
-  padding-bottom:60%;
+  padding-bottom:75%;
   margin:30px auto 20px auto;
   border-radius:20px;
   overflow:hidden;
   background:#000;
   box-shadow:0 15px 40px rgba(0,0,0,0.7);
 }
-
 .stream-container iframe{
   position:absolute;
   top:0;
@@ -73,6 +72,7 @@ body{
   border:none;
 }
 
+/* LOADER */
 .loader{
   position:absolute;
   top:50%;
@@ -85,12 +85,12 @@ body{
   height:60px;
   animation:spin 1s linear infinite;
 }
-
 @keyframes spin{
   0%{transform:translate(-50%,-50%) rotate(0deg);}
   100%{transform:translate(-50%,-50%) rotate(360deg);}
 }
 
+/* BUTTON */
 .btn{
   padding:14px 30px;
   background:linear-gradient(to right,#ffcc00,#ff9900);
@@ -102,6 +102,7 @@ body{
   margin:15px;
 }
 
+/* VIEWER */
 .viewer-box{
   background:#111;
   padding:12px 25px;
@@ -110,28 +111,13 @@ body{
   font-size:18px;
   font-weight:bold;
   color:#00ff99;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:15px;
 }
 
-.username-input{
-  margin:15px 0;
-}
-
-.username-input input{
-  padding:10px;
-  width:200px;
-  border-radius:20px;
-  border:none;
-}
-
-.username-input button{
-  padding:10px 20px;
-  border-radius:20px;
-  border:none;
-  background:#ffcc00;
-  color:#000;
-  cursor:pointer;
-}
-
+/* CHAT */
 .chat-container{
   width:90%;
   max-width:1000px;
@@ -140,7 +126,6 @@ body{
   padding:15px;
   margin-bottom:40px;
 }
-
 .chat-box{
   height:300px;
   overflow-y:auto;
@@ -151,18 +136,15 @@ body{
   margin-bottom:10px;
   scroll-behavior:smooth;
 }
-
 .chat-input{
   display:flex;
 }
-
 .chat-input input{
   flex:1;
   padding:10px;
   border:none;
   border-radius:20px 0 0 20px;
 }
-
 .chat-input button{
   padding:10px 20px;
   border:none;
@@ -174,17 +156,18 @@ body{
 
 .msg-item{
   display:flex;
-  justify-content:space-between;
+  justify-content:flex-start;
   align-items:center;
   margin-bottom:5px;
+  transition:all 0.3s ease;
 }
-
 .msg-text{
   flex:1;
-  padding:4px 8px;
-  border-radius:10px;
+  padding:6px 10px;
+  border-radius:12px;
+  margin-right:10px;
+  word-break:break-word;
 }
-
 .delete-btn{
   background:red;
   color:#fff;
@@ -195,6 +178,7 @@ body{
   margin-left:10px;
 }
 
+/* WHATSAPP LINK */
 .whatsapp{
   position:fixed;
   bottom:20px;
@@ -208,7 +192,7 @@ body{
 }
 
 @media(max-width:768px){
-  .stream-container{padding-bottom:70%;}
+  .stream-container{padding-bottom:80%;}
   .header{font-size:22px;}
 }
 </style>
@@ -218,12 +202,12 @@ body{
 <div class="header">🏏 T20 WORLD CUP 2026 LIVE BY CRAZY</div>
 <div class="live-badge">🔴 LIVE NOW</div>
 
-<div class="stream-container">
+<div class="stream-container" id="streamBox">
   <div class="loader" id="loader"></div>
   <iframe id="liveFrame"
-  src="https://tamashaweb.com/icc-mens-t20-world-cup-2026"
-  allowfullscreen
-  onload="document.getElementById('loader').style.display='none'">
+    src="https://tamashaweb.com/icc-mens-t20-world-cup-2026"
+    allowfullscreen
+    onload="document.getElementById('loader').style.display='none'">
   </iframe>
 </div>
 
@@ -233,11 +217,7 @@ body{
   👀 Live Viewers: <span id="viewerCount">0</span>
 </div>
 
-<div class="username-input">
-  <input type="text" id="usernameInput" placeholder="Enter your name">
-  <button onclick="setUsername()">Set Name</button>
-</div>
-
+<!-- CHAT -->
 <div class="chat-container">
   <h2 style="color:#ffcc00;">💬 Live Chat</h2>
   <div class="chat-box" id="chatBox"></div>
@@ -258,6 +238,7 @@ Join WhatsApp Channel
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
 <script>
+// FIREBASE INIT
 const firebaseConfig = {
   apiKey: "AIzaSyA8tz08_fIIVq3MRT3VVTLyD35QsfLzxE0",
   authDomain: "t20worldcuplivebycrazy.firebaseapp.com",
@@ -273,66 +254,63 @@ function goFullScreen(){
   if(iframe.requestFullscreen){iframe.requestFullscreen();}
 }
 
-/* REAL-TIME VIEWER COUNTER */
+/* VIEWERS */
 const viewerRef = db.ref("viewers");
 const myViewer = viewerRef.push();
-myViewer.set(true); // Add this user
-myViewer.onDisconnect().remove(); // Remove on disconnect
-
+myViewer.set(true);
+myViewer.onDisconnect().remove();
 viewerRef.on("value", snapshot=>{
-  const count = snapshot.numChildren();
-  document.getElementById("viewerCount").innerText = count;
+  document.getElementById("viewerCount").innerText = snapshot.numChildren();
 });
 
-/* USERNAME + ADMIN CHECK */
+/* CHAT */
 let username = "Guest";
-let isAdmin=false;
-function setUsername(){
-  const input=document.getElementById("usernameInput");
-  if(input.value.trim()!==""){
-    username=input.value.trim();
-    if(username==="admin"){ 
-      const pwd=prompt("Enter Admin Password");
-      if(pwd==="crazy123"){isAdmin=true; alert("Admin Mode ON");}
-    }
-  }
-  input.value="";
-  alert("Username set to: "+username);
+let isAdmin = false;
+
+function setUsername(name,pwd){
+  username = name||"Guest";
+  if(name==="admin" && pwd==="crazy123"){isAdmin=true; alert("Admin Mode ON");}
 }
 
-/* SEND MESSAGE */
 function sendMessage(){
   const msg=document.getElementById("chatInput").value.trim();
-  if(msg!==""){
-    const color="#"+Math.floor(Math.random()*16777215).toString(16);
-    const newMsg=db.ref("chat").push();
-    newMsg.set({text:msg,user:username,color:color});
-    document.getElementById("chatInput").value="";
-  }
+  if(msg==="") return;
+
+  const color="#"+Math.floor(Math.random()*16777215).toString(16);
+  const newMsg = db.ref("chat").push();
+  newMsg.set({
+    text: msg,
+    user: username,
+    color: color,
+    type:"msg",
+    timestamp: Date.now()
+  });
+  document.getElementById("chatInput").value="";
 }
 
-/* RECEIVE MESSAGE + AUTO SCROLL */
+// RECEIVE + AUTO DELETE GUEST MESSAGES
 db.ref("chat").on("child_added", snapshot=>{
   const data = snapshot.val();
   const key = snapshot.key;
-  const div = document.createElement("div");
-  div.className="msg-item";
-  let delBtn = isAdmin ? `<button class="delete-btn" onclick="deleteMessage('${key}')">X</button>` : "";
-  div.innerHTML=`
-    <div class="msg-text">
-      <span style="color:${data.color};font-weight:bold;">${data.user}:</span> ${data.text}
-    </div>
-    ${delBtn}`;
-  document.getElementById("chatBox").appendChild(div);
-  div.scrollIntoView({behavior:"smooth"});
-});
 
-/* DELETE MESSAGE */
-function deleteMessage(key){
-  if(confirm("Delete message?")){
-    db.ref("chat/"+key).remove();
+  if(data.type==="msg"){
+    const div = document.createElement("div");
+    div.className="msg-item";
+    let delBtn = (isAdmin || data.user==="admin") ? `<button class="delete-btn" onclick="db.ref('chat/${key}').remove()">X</button>` : "";
+    div.innerHTML=`<div class="msg-text" style="background:#222;color:${data.color};">
+                     <span style="font-weight:bold;">${data.user}:</span> ${data.text}
+                   </div>${delBtn}`;
+    document.getElementById("chatBox").appendChild(div);
+    div.scrollIntoView({behavior:"smooth"});
+
+    // AUTO DELETE guest messages after 5 min
+    if(data.user!=="admin"){
+      setTimeout(()=>{
+        db.ref("chat/"+key).remove();
+      },300000);
+    }
   }
-}
+});
 </script>
 </body>
 </html>
