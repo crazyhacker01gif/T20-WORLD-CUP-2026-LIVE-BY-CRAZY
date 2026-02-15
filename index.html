@@ -225,9 +225,9 @@ onload="document.getElementById('loader').style.display='none'">
 
 <button class="btn" onclick="goFullScreen()">🔥 Watch Full Screen</button>
 
-<!-- MATCH INFO -->
+<!-- MATCH INFO (STATIC) -->
 <div class="match-info-box">
-Next Match: <span id="nextMatchTeams">Loading...</span> | Starts in: <span id="countdown">Loading...</span> 🔥 Live by Crazy Hacker!
+Pakistan 🇵🇰 vs India 🇮🇳 | 🔥 LIVE BY CRAZY HACKER
 </div>
 
 <div class="viewer-box">
@@ -274,31 +274,10 @@ projectId:"t20worldcuplivebycrazy"
 firebase.initializeApp(firebaseConfig);
 const db=firebase.database();
 
-/* MATCH SCHEDULE */
+/* TICKER */
 const matches = [
   { teams: "Pakistan 🇵🇰 vs India 🇮🇳", time: "2026-02-15T18:00:00" },
 ];
-
-/* UPDATE NEXT MATCH COUNTDOWN */
-function updateNextMatchCountdown() {
-  const now = new Date();
-  let nextMatch = matches[0];
-  const diff = new Date(nextMatch.time) - now;
-  if(diff <= 0){
-    document.getElementById("countdown").innerText = "Match Started!";
-    document.getElementById("nextMatchTeams").innerText = `${nextMatch.teams} 🔥 Live by Crazy Hacker!`;
-    return;
-  }
-  const h = Math.floor(diff/1000/60/60);
-  const m = Math.floor((diff/1000/60)%60);
-  const s = Math.floor((diff/1000)%60);
-  document.getElementById("countdown").innerText = `${h}h ${m}m ${s}s`;
-  document.getElementById("nextMatchTeams").innerText = `${nextMatch.teams} 🔥 Live by Crazy Hacker!`;
-}
-setInterval(updateNextMatchCountdown,1000);
-updateNextMatchCountdown();
-
-/* TICKER */
 function updateTicker(){
   const ticker=document.getElementById("matchTicker");
   ticker.innerHTML="";
@@ -310,7 +289,6 @@ function updateTicker(){
     const s = Math.floor((diff/1000)%60);
     let status = diff<=0 ? "Started" : `Starts in: ${h}h ${mnt}m ${s}s`;
     const span=document.createElement("span");
-    // Scroll me full text + spacing + LIVE BY CRAZY HACKER
     span.innerText = `   ${m.teams} | ${status}   🔥 LIVE BY CRAZY HACKER   `;
     ticker.appendChild(span);
   });
