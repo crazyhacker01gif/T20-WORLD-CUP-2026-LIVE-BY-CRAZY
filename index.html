@@ -62,7 +62,7 @@ border:2px solid #ffcc00;
 }
 .ticker{
 display:flex;
-gap:50px;
+gap:80px;
 white-space:nowrap;
 animation:scrollTicker 25s linear infinite;
 }
@@ -282,7 +282,7 @@ const matches = [
 /* UPDATE NEXT MATCH COUNTDOWN */
 function updateNextMatchCountdown() {
   const now = new Date();
-  let nextMatch = matches[0]; // Only Pakistan vs India
+  let nextMatch = matches[0];
   const diff = new Date(nextMatch.time) - now;
   if(diff <= 0){
     document.getElementById("countdown").innerText = "Match Started!";
@@ -317,14 +317,40 @@ function updateTicker(){
 setInterval(updateTicker,1000);
 updateTicker();
 
-/* USERNAME SAVE */
-let currentUser = localStorage.getItem("username") || "Guest";
+/* USERNAME SAVE WITH DUPLICATE CHECK */
+let currentUser = localStorage.getItem("username") || "";
+const usernamesRef = db.ref("usernames");
+
 function setUsername(){
-  const name=document.getElementById("usernameInput").value.trim();
-  if(name==="")return;
-  currentUser=name;
-  localStorage.setItem("username",name);
-  alert("Username Set: "+name);
+  const name = document.getElementById("usernameInput").value.trim();
+  if(name==="") return;
+
+  usernamesRef.once("value", snap => {
+    const allNames = snap.val() || {};
+    const namesArray = Object.values(allNames);
+
+    if(namesArray.includes(name)){
+      alert("❌ Username already taken! Choose another.");
+      return;
+    }
+
+    // Remove previous username if exists
+    if(currentUser){
+      usernamesRef.orderByValue().equalTo(currentUser).once("value", prevSnap => {
+        prevSnap.forEach(child => { child.ref.remove(); });
+      });
+    }
+
+    // Save new username
+    const newUserRef = usernamesRef.push();
+    newUserRef.set(name);
+    currentUser = name;
+    localStorage.setItem("username", name);
+    alert("✅ Username Set: " + name);
+
+    // Remove username from Firebase on disconnect
+    newUserRef.onDisconnect().remove();
+  });
 }
 
 /* VIEWERS */
@@ -345,7 +371,7 @@ if(msg==="")return;
 
 let newMsg=db.ref("chat").push();
 newMsg.set({
-user:currentUser,
+user:currentUser || "Guest",
 text:msg,
 timestamp:Date.now()
 });
