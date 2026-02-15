@@ -2,12 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>T20 WC 2026 Live | Crazy</title>
+<title>T20 WC 2026 Live | Crazy Hacker</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
-
 body{
 font-family:'Segoe UI',Tahoma,sans-serif;
 background:linear-gradient(135deg,#0d0d0d,#1a1a1a);
@@ -204,7 +203,7 @@ transition:0.3s;
 
 <body>
 
-<div class="header">🏏 T20 WORLD CUP 2026 LIVE BY CRAZY</div>
+<div class="header">🏏 T20 WORLD CUP 2026 LIVE BY CRAZY HACKER</div>
 <div class="live-badge">🔴 LIVE NOW</div>
 
 <!-- MATCH TICKER -->
@@ -228,7 +227,7 @@ onload="document.getElementById('loader').style.display='none'">
 
 <!-- MATCH INFO -->
 <div class="match-info-box">
-Next Match: <span id="nextMatchTeams">Loading...</span> | Starts in: <span id="countdown">Loading...</span>
+Next Match: <span id="nextMatchTeams">Loading...</span> | Starts in: <span id="countdown">Loading...</span> 🔥 Live by Crazy Hacker!
 </div>
 
 <div class="viewer-box">
@@ -257,7 +256,7 @@ Next Match: <span id="nextMatchTeams">Loading...</span> | Starts in: <span id="c
 <a class="whatsapp"
 href="https://whatsapp.com/channel/0029Vb5l43dK0IBsMnYMGo2d"
 target="_blank">
-Join WhatsApp Channel
+Join WhatsApp Channel / Website by Crazy Hacker
 </a>
 
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
@@ -282,18 +281,18 @@ const matches = [
 /* UPDATE NEXT MATCH COUNTDOWN */
 function updateNextMatchCountdown() {
   const now = new Date();
-  let nextMatch = matches[0]; // Only Pakistan vs India
+  let nextMatch = matches[0];
   const diff = new Date(nextMatch.time) - now;
   if(diff <= 0){
     document.getElementById("countdown").innerText = "Match Started!";
-    document.getElementById("nextMatchTeams").innerText = nextMatch.teams;
+    document.getElementById("nextMatchTeams").innerText = `${nextMatch.teams} 🔥 Live by Crazy Hacker!`;
     return;
   }
   const h = Math.floor(diff/1000/60/60);
   const m = Math.floor((diff/1000/60)%60);
   const s = Math.floor((diff/1000)%60);
   document.getElementById("countdown").innerText = `${h}h ${m}m ${s}s`;
-  document.getElementById("nextMatchTeams").innerText = nextMatch.teams;
+  document.getElementById("nextMatchTeams").innerText = `${nextMatch.teams} 🔥 Live by Crazy Hacker!`;
 }
 setInterval(updateNextMatchCountdown,1000);
 updateNextMatchCountdown();
@@ -303,14 +302,14 @@ function updateTicker(){
   const ticker=document.getElementById("matchTicker");
   ticker.innerHTML="";
   matches.forEach(m=>{
-    const now=new Date();
-    const diff=new Date(m.time)-now;
-    const h=Math.floor(diff/1000/60/60);
-    const mnt=Math.floor((diff/1000/60)%60);
-    const s=Math.floor((diff/1000)%60);
+    const now = new Date();
+    const diff = new Date(m.time)-now;
+    const h = Math.floor(diff/1000/60/60);
+    const mnt = Math.floor((diff/1000/60)%60);
+    const s = Math.floor((diff/1000)%60);
     let status = diff<=0 ? "Started" : `Starts in: ${h}h ${mnt}m ${s}s`;
     const span=document.createElement("span");
-    span.innerText=`${m.teams} | ${status}`;
+    span.innerText = `Crazy Hacker 🔥 ${m.teams} | ${status} | Live by Crazy Hacker!`;
     ticker.appendChild(span);
   });
 }
@@ -318,7 +317,7 @@ setInterval(updateTicker,1000);
 updateTicker();
 
 /* USERNAME SAVE */
-let currentUser = localStorage.getItem("username") || "Guest";
+let currentUser = localStorage.getItem("username") || "Crazy Hacker";
 function setUsername(){
   const name=document.getElementById("usernameInput").value.trim();
   if(name==="")return;
