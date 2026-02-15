@@ -279,16 +279,16 @@ const matches = [
   { teams: "Pakistan 🇵🇰 vs India 🇮🇳", time: "2026-02-15T18:00:00" },
 ];
 
-/* UPDATE NEXT MATCH */
+/* UPDATE NEXT MATCH COUNTDOWN */
 function updateNextMatchCountdown() {
   const now = new Date();
-  let nextMatch = matches.find(m => new Date(m.time) > now);
-  if (!nextMatch) {
-    document.getElementById("countdown").innerText = "No upcoming matches!";
-    document.getElementById("nextMatchTeams").innerText = "-";
+  let nextMatch = matches[0]; // Only Pakistan vs India
+  const diff = new Date(nextMatch.time) - now;
+  if(diff <= 0){
+    document.getElementById("countdown").innerText = "Match Started!";
+    document.getElementById("nextMatchTeams").innerText = nextMatch.teams;
     return;
   }
-  const diff = new Date(nextMatch.time) - now;
   const h = Math.floor(diff/1000/60/60);
   const m = Math.floor((diff/1000/60)%60);
   const s = Math.floor((diff/1000)%60);
@@ -303,13 +303,14 @@ function updateTicker(){
   const ticker=document.getElementById("matchTicker");
   ticker.innerHTML="";
   matches.forEach(m=>{
-    const span=document.createElement("span");
     const now=new Date();
     const diff=new Date(m.time)-now;
     const h=Math.floor(diff/1000/60/60);
     const mnt=Math.floor((diff/1000/60)%60);
     const s=Math.floor((diff/1000)%60);
-    span.innerText=`${m.teams} | Starts in: ${h}h ${mnt}m ${s}s`;
+    let status = diff<=0 ? "Started" : `Starts in: ${h}h ${mnt}m ${s}s`;
+    const span=document.createElement("span");
+    span.innerText=`${m.teams} | ${status}`;
     ticker.appendChild(span);
   });
 }
