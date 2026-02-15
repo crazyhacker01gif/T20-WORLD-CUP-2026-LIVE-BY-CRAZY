@@ -253,10 +253,11 @@ Next Match: <span id="nextMatchTeams">Loading...</span> | Starts in: <span id="c
 </div>
 </div>
 
+<!-- WHATSAPP -->
 <a class="whatsapp"
 href="https://whatsapp.com/channel/0029Vb5l43dK0IBsMnYMGo2d"
 target="_blank">
-Join WhatsApp Channel / Website by Crazy Hacker
+Join WhatsApp Channel
 </a>
 
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
@@ -309,7 +310,8 @@ function updateTicker(){
     const s = Math.floor((diff/1000)%60);
     let status = diff<=0 ? "Started" : `Starts in: ${h}h ${mnt}m ${s}s`;
     const span=document.createElement("span");
-    span.innerText = `Crazy Hacker 🔥 ${m.teams} | ${status} | Live by Crazy Hacker!`;
+    // Scroll me full text + spacing + LIVE BY CRAZY HACKER
+    span.innerText = `   ${m.teams} | ${status}   🔥 LIVE BY CRAZY HACKER   `;
     ticker.appendChild(span);
   });
 }
