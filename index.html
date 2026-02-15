@@ -227,7 +227,7 @@ onload="document.getElementById('loader').style.display='none'">
 
 <!-- MATCH INFO (STATIC) -->
 <div class="match-info-box">
-Pakistan 🇵🇰 vs India 🇮🇳 | 🔥 LIVE BY CRAZY HACKER
+Pakistan 🇵🇰 vs India 🇮🇳 , time: "2026-02-15T18:00:00"
 </div>
 
 <div class="viewer-box">
@@ -289,7 +289,7 @@ function updateTicker(){
     const s = Math.floor((diff/1000)%60);
     let status = diff<=0 ? "Started" : `Starts in: ${h}h ${mnt}m ${s}s`;
     const span=document.createElement("span");
-    span.innerText = `   ${m.teams} | ${status}   🔥 LIVE BY CRAZY HACKER   `;
+    span.innerText = `   ${m.teams} | ${status}              🔥 LIVE BY CRAZY HACKER   `;
     ticker.appendChild(span);
   });
 }
