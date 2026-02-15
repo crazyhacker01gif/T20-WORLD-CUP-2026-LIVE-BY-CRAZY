@@ -299,22 +299,24 @@ setInterval(updateNextMatchCountdown,1000);
 updateNextMatchCountdown();
 
 /* TICKER */
+ /* TICKER */
 function updateTicker(){
-  const ticker=document.getElementById("matchTicker");
-  ticker.innerHTML="";
-  matches.forEach(m=>{
-    const now=new Date();
-    const diff=new Date(m.time)-now;
-    const h=Math.floor(diff/1000/60/60);
-    const mnt=Math.floor((diff/1000/60)%60);
-    const s=Math.floor((diff/1000)%60);
-    let status = diff<=0 ? "Started" : `Starts in: ${h}h ${mnt}m ${s}s`;
-    const span=document.createElement("span");
-    span.innerText=`${m.teams} | ${status}`;
+  const ticker = document.getElementById("matchTicker");
+  ticker.innerHTML = "";
+  matches.forEach(m => {
+    const now = new Date();
+    const diff = new Date(m.time) - now;
+    const h = Math.floor(diff / 1000 / 60 / 60);
+    const mnt = Math.floor((diff / 1000 / 60) % 60);
+    const s = Math.floor((diff / 1000) % 60);
+    let status = diff <= 0 ? "Started" : `Starts in: ${h}h ${mnt}m ${s}s`;
+    const span = document.createElement("span");
+    // Yahan scroll text me apna name add kiya
+    span.innerText = `${m.teams} | ${status} 🔥 LIVE BY CRAZY HACKER`;
     ticker.appendChild(span);
   });
 }
-setInterval(updateTicker,1000);
+setInterval(updateTicker, 1000);
 updateTicker();
 
 /* USERNAME SAVE */
